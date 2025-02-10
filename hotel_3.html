@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mountain Lodge</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin-top: 160px;
+        padding: 0;
+      }
+      .navbar {
+        background-color: #223843;
+        color: #fff;
+        padding: 1.5em;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2em;
+      }
+      .logo {
+        font-size: 1.8em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .nav-links a:hover {
+        color: #d77a61;
+      }
+      .container {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 1200px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .hotel-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .hotel-header img {
+        width: 300px;
+        height: 200px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .hotel-header h1 {
+        font-size: 2.5em;
+        margin: 0;
+      }
+      .price {
+        font-size: 1.5em;
+        color: #28a745;
+        font-weight: bold;
+      }
+      .section {
+        margin: 20px 0;
+      }
+      .section h2 {
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+      }
+      .availability {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .availability div {
+        padding: 10px;
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">TravelPlatform</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="forum.html">Forum</a>
+        <a href="profile.html">Profile</a>
+        <a href="booking.html">Booking</a>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="hotel-header">
+        <img
+          src="https://picsum.photos/300/200?random=3"
+          alt="Mountain Lodge"
+        />
+        <div>
+          <h1>Mountain Lodge</h1>
+          <p>Karnataka</p>
+          <div class="price">$140/night</div>
+        </div>
+      </div>
+      <div class="section">
+        <h2>Description</h2>
+        <p>
+          A cozy mountain lodge surrounded by breathtaking views and natural
+          beauty in Karnataka.
+        </p>
+      </div>
+      <div class="section">
+        <h2>Availability</h2>
+        <div class="availability">
+          <div>Room Type: Deluxe Suite</div>
+          <div>Max Occupancy: 2 Adults</div>
+          <div>Price: $140/night</div>
+          <div>Availability: Available</div>
+        </div>
+      </div>
+      <div class="section">
+        <h2>Reviews</h2>
+        <p>No reviews yet. Be the first to review this property!</p>
+      </div>
+      <div class="section">
+        <h2>FAQs</h2>
+        <p>Check-in: 2:00 PM | Check-out: 12:00 PM</p>
+      </div>
+      <div class="section">
+        <h2>Hotel Policies</h2>
+        <p>No pets allowed. Smoking is prohibited.</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,66 +1,132 @@
-/* forum.css */
+/* Merged CSS: Global Styles + Forum-Specific Styles */
 
-body {
-    font-family: Arial, sans-serif;
+/* Reset */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-}
-
-.navbar {
-    background-color: #333;
-    color: white;
-    padding: 15px; /* Increased padding for a larger header */
+    box-sizing: border-box;
+  }
+  
+  /* Animated Gradient Background */
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #3a3a3a, #1c1c1c, #3a3a3a);
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
+    color: #f0f0f0;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  
+  /* Navigation Bar */
+  .navbar {
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 1.5rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 18px; /* Increased font size for navbar */
-}
-
-.logo {
-    font-size: 24px; /* Increased font size for logo */
-}
-
-.nav-links a {
-    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar .logo {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #d3d3d3;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    color: #d3d3d3;
     text-decoration: none;
-    margin: 0 20px; /* Increased margin for better spacing */
-    font-size: 18px; /* Increased font size for nav links */
-}
-
-.search-bar input {
-    padding: 10px; /* Increased padding for search input */
-    font-size: 16px; /* Increased font size for search input */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.search-bar button {
-    padding: 10px 15px; /* Increased padding for search button */
-    font-size: 16px; /* Increased font size for search button */
+    font-size: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #38ef70;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input[type="text"] {
+    padding: 0.5rem;
     border: none;
-    border-radius: 4px;
-    background-color: #007BFF;
-    color: white;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+  }
+  
+  .search-bar button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #38ef70;
+    color: #fff;
     cursor: pointer;
-    margin-left: 5px; /* Spacing between input and button */
-}
-
-.search-bar button:hover {
-    background-color: #0056b3; /* Darker color on hover */
-}
-
-.filter-sort-section {
+    transition: background-color 0.3s;
+  }
+  
+  .search-bar button:hover {
+    background-color: #32d966;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  /* ---------- Forum-Specific Styles ---------- */
+  
+  /* Create Post Button */
+  .create-post-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 16px;
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .create-post-button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+  }
+  
+  /* Filter and Sort Section */
+  .filter-sort-section {
     margin: 20px 0;
     display: flex;
     align-items: center;
-}
-
-.filter-sort-section label {
+    justify-content: center;
+  }
+  
+  .filter-sort-section label {
     margin-right: 10px;
-}
-
-.filter-sort-section select {
+  }
+  
+  .filter-sort-section select {
     margin-right: 20px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -69,183 +135,165 @@ body {
     font-size: 14px;
     cursor: pointer;
     transition: border-color 0.3s;
-}
-
-.filter-sort-section select:hover {
-    border-color: #007BFF;
-}
-
-hr {
+  }
+  
+  .filter-sort-section select:hover {
+    border-color: #218838;
+  }
+  
+  hr {
     border: 1px solid #ccc;
     margin: 20px 0;
-}
-
-.container {
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
-}
-
-.forum-posts {
+  }
+  
+  /* Forum Posts and Post Styles */
+  .forum-posts {
     margin: 20px 0;
-}
-
-.post {
+  }
+  
+  .post {
     border: 1px solid #ccc;
     padding: 15px;
     margin-bottom: 15px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.post h2 {
-    font-size: 24px; /* Larger title font size */
-    color: #333; /* Darker title color */
-    margin: 0 0 10px; /* Spacing below title */
-}
-
-.post p {
-    font-size: 16px; /* Content font size */
-    line-height: 1.5; /* Better line spacing */
-    margin: 10px 0; /* Spacing above and below content */
-    background-color: #f9f9f9; /* Light background for content */
-    padding: 10px; /* Padding inside content area */
-    border-radius: 4px; /* Rounded corners for content area */
-}
-
-.post-media {
-    margin: 10px 0; /* Spacing above and below media */
-}
-
-.post-media img {
-    max-width: 100%; /* Responsive images */
-    border-radius: 4px; /* Rounded corners for images */
-    margin-bottom: 10px; /* Spacing below images */
-}
-
-.post-media video {
-    max-width: 100%; /* Responsive videos */
-    border-radius: 4px; /* Rounded corners for videos */
-    margin-bottom: 10px; /* Spacing below videos */
-}
-
-.post-actions {
+  }
+  
+  .post h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 0 0 10px;
+  }
+  
+  .post p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 10px 0;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .post-media {
+    margin: 10px 0;
+  }
+  
+  .post-media img {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .post-media video {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  /* Post Actions */
+  .post-actions {
     margin-top: 10px;
-}
-
-.post-actions button {
+  }
+  
+  .post-actions button {
     margin-right: 10px;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    background-color: #007BFF;
+    background-color: #4db377;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-}
-
-.post-actions button:hover {
-    background-color: #0056b3;
+  }
+  
+  .post-actions button:hover {
+    background-color: #459c5f;
     transform: scale(1.05);
-}
-
-.reply-field {
+  }
+  
+  /* Reply Field and Replies */
+  .reply-field {
     margin-top: 10px;
     margin-bottom: 10px;
-}
-
-.reply {
+  }
+  
+  .reply {
     margin-top: 5px;
     padding: 10px;
     background-color: #e9ecef;
-    border-left: 3px solid #007BFF;
-    border-radius: 5px; /* Rounded corners for replies */
-}
-
-.reply-actions {
-    margin-top: 5px; /* Spacing above actions */
-}
-
-.reply-actions button {
+    border-left: 3px solid #50a382;
+    border-radius: 5px;
+  }
+  
+  .reply-actions {
+    margin-top: 5px;
+  }
+  
+  .reply-actions button {
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
-    background-color: #007BFF; /* Button color */
+    background-color: #45926e;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s; /* Add transition for hover */
-}
-
-.reply-actions button:hover {
-    background-color: #0056b3; /* Darker color on hover */
-    transform: scale(1.05); /* Slight scale effect on hover */
-}
-
-.create-post-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
     transition: background-color 0.3s, transform 0.2s;
-}
-
-.create-post-button:hover {
-    background-color: #218838;
+  }
+  
+  .reply-actions button:hover {
+    background-color: #4a916c;
     transform: scale(1.05);
-}
-
-.post-popup {
+  }
+  
+  /* Popup Form for Creating a New Post */
+  .post-popup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid #ccc;
+    border: 1px solid #0e0d0d;
     background-color: white;
-    padding: 30px; /* Increased padding for more room */
+    padding: 30px;
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 600px; /* Increased width for better appearance */
-}
-
-.popup-content {
-    max-width: 100%; /* Allowing full width of the popup */
-}
-
-.popup-content label {
+    width: 600px;
+  }
+  
+  .popup-content {
+    max-width: 100%;
+  }
+  
+  .popup-content label {
     display: block;
     margin-top: 10px;
-}
-
-.popup-content input,
-.popup-content textarea {
+  }
+  
+  .popup-content input,
+  .popup-content textarea {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #131212;
     border-radius: 4px;
-}
-
-.popup-actions {
+  }
+  
+  .popup-actions {
     margin-top: 20px;
-}
-
-.popup-actions button {
+  }
+  
+  .popup-actions button {
     margin-right: 10px;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    background-color: #007BFF;
-    color: white;
+    background-color: #428556;
+    color: rgb(253, 251, 251);
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-}
-
-.popup-actions button:hover {
-    background-color: #0056b3;
+  }
+  
+  .popup-actions button:hover {
+    background-color: #438559;
     transform: scale(1.05);
-}
+  }
+  

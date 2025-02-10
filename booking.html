@@ -1,69 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Travel Platform - Booking</title>
-</head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin-top: 160px;
+        padding: 0;
+      }
 
-<body>
+      .navbar {
+        background-color: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        padding: 1.5em;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2em;
+      }
+
+      .logo {
+        font-size: 1.8em;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #d77a61;
+      }
+
+      .search-bar {
+        display: flex;
+        gap: 10px;
+      }
+
+      .search-bar input[type="text"] {
+        padding: 0.5em;
+        border: none;
+        border-radius: 5px;
+        width: 400px;
+      }
+
+      .search-bar input[type="date"] {
+        padding: 0.5em;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .search-bar button {
+        padding: 0.5em 1em;
+        background-color: #d77a61;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .search-bar button:hover {
+        background-color: #dbd3d8;
+      }
+
+      .container {
+        margin-top: 20px;
+        padding: 0 20px; /* Added padding to align content */
+      }
+
+      .container h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .filter-container {
+        margin: 20px auto;
+        text-align: center;
+      }
+
+      .filter-container select {
+        padding: 10px;
+        margin: 0 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .hotel-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 0 20px;
+      }
+
+      .hotel-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hotel-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .hotel-card h3 {
+        margin: 10px;
+        font-size: 1.5em;
+        color: black;
+      }
+
+      .hotel-card p {
+        margin: 10px;
+        color: #555;
+      }
+
+      .hotel-card .price {
+        margin-left: auto;
+        font-weight: bold;
+        margin: 10px;
+        color: #28a745;
+      }
+
+      .hotel-card button {
+        margin: 10px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+
+      .hotel-card button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
     <nav class="navbar">
-        <div class="logo">TravelPlatform</div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="forum.html">Forum</a>
-            <a href="profile.html">Profile</a>
-            <a href="booking.html">Booking</a>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
-        </div>
+      <div class="logo">TravelPlatform</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="forum.html">Forum</a>
+        <a href="profile.html">Profile</a>
+        <a href="booking.html">Booking</a>
+      </div>
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search for hotels..."
+        />
+        <input type="date" id="dateInput" />
+        <button>Search</button>
+      </div>
     </nav>
 
     <div class="container">
-        <h1>Available Accommodations</h1>
-        <div class="filter-bar">
-            <label for="price">Price:</label>
-            <input type="text" id="price">
-            <label for="location">Location:</label>
-            <input type="text" id="location">
-            <label for="amenities">Amenities:</label>
-            <input type="text" id="amenities">
-            <button class="filter-button">Filter</button>
+      <h1>Find Your Perfect Hotel</h1>
+
+      <div class="filter-container">
+        <select id="locationFilter" onchange="filterHotels()">
+          <option value="">All States</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Karnataka">Karnataka</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Delhi">Delhi</option>
+          <option value="West Bengal">West Bengal</option>
+          <option value="Gujarat">Gujarat</option>
+          <option value="Rajasthan">Rajasthan</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Uttar Pradesh">Uttar Pradesh</option>
+          <option value="Punjab">Punjab</option>
+          <option value="Haryana">Haryana</option>
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Telangana">Telangana</option>
+          <option value="Odisha">Odisha</option>
+          <option value="Bihar">Bihar</option>
+          <option value="Chhattisgarh">Chhattisgarh</option>
+          <option value="Jharkhand">Jharkhand</option>
+          <option value="Assam">Assam</option>
+          <option value="Himachal Pradesh">Himachal Pradesh</option>
+          <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+          <option value="Uttarakhand">Uttarakhand</option>
+          <option value="Goa">Goa</option>
+        </select>
+        <select id="priceFilter" onchange="filterHotels()">
+          <option value="">Price Range</option>
+          <option value="Under $100">Under $100</option>
+          <option value="$100 - $200">$100 - $200</option>
+          <option value="Above $200">Above $200</option>
+        </select>
+      </div>
+
+      <div class="hotel-list" id="hotelList">
+        <!-- Hotel cards (50 posts) -->
+        <div class="hotel-card" data-location="Maharashtra" data-price="$150">
+          <img src="https://picsum.photos/300/200?random=1" alt="Hotel 4" />
+
+          <h3>Hotel Paradise</h3>
+          <p>Maharashtra</p>
+          <div class="price">$150/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Maharashtra" data-price="$120">
+          <img src="https://picsum.photos/300/200?random=2" alt="Hotel 4" />
+
+          <h3>Beach Resort</h3>
+          <p>Maharashtra</p>
+          <div class="price">$120/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Karnataka" data-price="$140">
+          <img src="https://picsum.photos/300/200?random=3" alt="Hotel 4" />
+
+          <h3>Mountain Lodge</h3>
+          <p>Karnataka</p>
+          <div class="price">$140/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Karnataka" data-price="$100">
+          <img src="https://picsum.photos/300/200?random=4" alt="Hotel 4" />
+          <h3>City Center Inn</h3>
+          <p>Karnataka</p>
+          <div class="price">$100/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Tamil Nadu" data-price="$200">
+          <img src="https://picsum.photos/300/200?random=5" alt="Hotel 5" />
+          <h3>Luxury Suites</h3>
+          <p>Tamil Nadu</p>
+          <div class="price">$200/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Tamil Nadu" data-price="$90">
+          <img src="https://picsum.photos/300/200?random=6" alt="Hotel 6" />
+          <h3>Cozy Cabin</h3>
+          <p>Tamil Nadu</p>
+          <div class="price">$90/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Delhi" data-price="$130">
+          <img src="https://picsum.photos/300/200?random=7" alt="Hotel 7" />
+          <h3>Modern Hotel</h3>
+          <p>Delhi</p>
+          <div class="price">$130/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Delhi" data-price="$70">
+          <img src="https://picsum.photos/300/200?random=8" alt="Hotel 8" />
+          <h3>Budget Stay</h3>
+          <p>Delhi</p>
+          <div class="price">$70/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="West Bengal" data-price="$160">
+          <img src="https://picsum.photos/300/200?random=9" alt="Hotel 9" />
+          <h3>Family Resort</h3>
+          <p>West Bengal</p>
+          <div class="price">$160/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="West Bengal" data-price="$180">
+          <img src="https://picsum.photos/300/200?random=10" alt="Hotel 10" />
+          <h3>Romantic Getaway</h3>
+          <p>West Bengal</p>
+          <div class="price">$180/night</div>
+          <button>View Details</button>
+        </div>
+        <div class="hotel-card" data-location="Maharashtra" data-price="$350">
+          <img src="https://picsum.photos/300/200?random=11" alt="Hotel 1" />
+          <h3>The Ocean View Resort</h3>
+          <p>Maharashtra</p>
+          <div class="price">$350/night</div>
+          <button>View Details</button>
         </div>
 
-        <div class="card-container">
-            <div class="card">
-                <img src="https://via.placeholder.com/300x200" alt="Accommodation">
-                <h3>Cozy Hotel</h3>
-                <p>Location: Bali</p>
-                <p>Price: $100/night</p>
-            </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/300x200" alt="Accommodation">
-                <h3>Luxury Resort</h3>
-                <p>Location: Maldives</p>
-                <p>Price: $300/night</p>
-            </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/300x200" alt="Accommodation">
-                <h3>Mountain Lodge</h3>
-                <p>Location: Colorado</p>
-                <p>Price: $150/night</p>
-            </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/300x200" alt="Accommodation">
-                <h3>Urban Apartment</h3>
-                <p>Location: New York</p>
-                <p>Price: $200/night</p>
-            </div>
+        <div class="hotel-card" data-location="Karnataka" data-price="$120">
+          <img src="https://picsum.photos/300/200?random=12" alt="Hotel 2" />
+          <h3>Sunset Beach Villa</h3>
+          <p>Karnataka</p>
+          <div class="price">$120/night</div>
+          <button>View Details</button>
         </div>
+
+        <div class="hotel-card" data-location="Goa" data-price="$200">
+          <img src="https://picsum.photos/300/200?random=13" alt="Hotel 3" />
+          <h3>Serenity Lagoon Resort</h3>
+          <p>Goa</p>
+          <div class="price">$200/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Kerala" data-price="$450">
+          <img src="https://picsum.photos/300/200?random=14" alt="Hotel 4" />
+          <h3>Coconut Grove Retreat</h3>
+          <p>Kerala</p>
+          <div class="price">$450/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Uttarakhand" data-price="$300">
+          <img src="https://picsum.photos/300/200?random=15" alt="Hotel 5" />
+          <h3>Mountainview Heights</h3>
+          <p>Uttarakhand</p>
+          <div class="price">$300/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Rajasthan" data-price="$550">
+          <img src="https://picsum.photos/300/200?random=16" alt="Hotel 6" />
+          <h3>The Royal Palace Inn</h3>
+          <p>Rajasthan</p>
+          <div class="price">$550/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Tamil Nadu" data-price="$180">
+          <img src="https://picsum.photos/300/200?random=17" alt="Hotel 7" />
+          <h3>Temple Bay Resort</h3>
+          <p>Tamil Nadu</p>
+          <div class="price">$180/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Bengaluru" data-price="$220">
+          <img src="https://picsum.photos/300/200?random=18" alt="Hotel 8" />
+          <h3>Skyline City Hotel</h3>
+          <p>Bengaluru</p>
+          <div class="price">$220/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="West Bengal" data-price="$130">
+          <img src="https://picsum.photos/300/200?random=19" alt="Hotel 9" />
+          <h3>Ganges Horizon Inn</h3>
+          <p>West Bengal</p>
+          <div class="price">$130/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div
+          class="hotel-card"
+          data-location="Andhra Pradesh"
+          data-price="$300"
+        >
+          <img src="https://picsum.photos/300/200?random=20" alt="Hotel 10" />
+          <h3>Blue Bay Cottage</h3>
+          <p>Andhra Pradesh</p>
+          <div class="price">$300/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div
+          class="hotel-card"
+          data-location="Himachal Pradesh"
+          data-price="$400"
+        >
+          <img src="https://picsum.photos/300/200?random=21" alt="Hotel 11" />
+          <h3>Snowy Peak Lodge</h3>
+          <p>Himachal Pradesh</p>
+          <div class="price">$400/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div
+          class="hotel-card"
+          data-location="Madhya Pradesh"
+          data-price="$270"
+        >
+          <img src="https://picsum.photos/300/200?random=22" alt="Hotel 12" />
+          <h3>Saffron Heritage Hotel</h3>
+          <p>Madhya Pradesh</p>
+          <div class="price">$270/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Assam" data-price="$190">
+          <img src="https://picsum.photos/300/200?random=23" alt="Hotel 13" />
+          <h3>Brahmaputra River Lodge</h3>
+          <p>Assam</p>
+          <div class="price">$190/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Punjab" data-price="$210">
+          <img src="https://picsum.photos/300/200?random=24" alt="Hotel 14" />
+          <h3>Golden Fields Resort</h3>
+          <p>Punjab</p>
+          <div class="price">$210/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Bihar" data-price="$150">
+          <img src="https://picsum.photos/300/200?random=25" alt="Hotel 15" />
+          <h3>Ganga View Inn</h3>
+          <p>Bihar</p>
+          <div class="price">$150/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Odisha" data-price="$280">
+          <img src="https://picsum.photos/300/200?random=26" alt="Hotel 16" />
+          <h3>Konark Beach Resort</h3>
+          <p>Odisha</p>
+          <div class="price">$280/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Delhi" data-price="$350">
+          <img src="https://picsum.photos/300/200?random=27" alt="Hotel 17" />
+          <h3>The Capital Grand Hotel</h3>
+          <p>Delhi</p>
+          <div class="price">$350/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Chhattisgarh" data-price="$300">
+          <img src="https://picsum.photos/300/200?random=28" alt="Hotel 18" />
+          <h3>Raipur Lakeside Hotel</h3>
+          <p>Chhattisgarh</p>
+          <div class="price">$300/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Jharkhand" data-price="$220">
+          <img src="https://picsum.photos/300/200?random=29" alt="Hotel 19" />
+          <h3>Ranchi Hills Resort</h3>
+          <p>Jharkhand</p>
+          <div class="price">$220/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Mizoram" data-price="$180">
+          <img src="https://picsum.photos/300/200?random=30" alt="Hotel 20" />
+          <h3>Himalaya Horizon Hotel</h3>
+          <p>Mizoram</p>
+          <div class="price">$180/night</div>
+          <button>View Details</button>
+        </div>
+
+        <div class="hotel-card" data-location="Nagaland" data-price="$160">
+          <img src="https://picsum.photos/300/200?random=31" alt="Hotel 21" />
+          <h3>Green Valley Lodge</h3>
+          <p>Nagaland</p>
+          <div class="price">$160/night</div>
+          <button>View Details</button>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+      function filterHotels() {
+        const searchInput = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const locationFilter = document.getElementById("locationFilter").value;
+        const priceFilter = document.getElementById("priceFilter").value;
+        const hotelCards = document.querySelectorAll(".hotel-card");
 
+        hotelCards.forEach((card) => {
+          const title = card.querySelector("h3").textContent.toLowerCase();
+          const location = card.getAttribute("data-location");
+          const price = parseInt(
+            card.getAttribute("data-price").replace("$", "")
+          );
+
+          const matchesSearch = title.includes(searchInput);
+          const matchesLocation =
+            locationFilter === "" || location === locationFilter;
+          const matchesPrice =
+            priceFilter === "" ||
+            (priceFilter === "Under $100" && price < 100) ||
+            (priceFilter === "$100 - $200" && price >= 100 && price <= 200) ||
+            (priceFilter === "Above $200" && price > 200);
+
+          if (matchesSearch && matchesLocation && matchesPrice) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
 </html>

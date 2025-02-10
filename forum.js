@@ -5,41 +5,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const closePostButton = document.getElementById("closePostButton");
     const postForm = document.getElementById("postForm");
     const postTemplate = document.getElementById("postTemplate");
-    if (!postTemplate || !('content' in document.createElement('template'))) {
-        console.error("Your browser doesn't support HTML template elements.");
-        return;
-    }
-    const categoryFilter = document.getElementById("categoryFilter");
-    const sortOrder = document.getElementById("sortOrder");
-
+    
     const API_BASE_URL = "http://localhost:5000"; // Update with your backend URL
 
-    // Fetch all posts from the backend
     async function fetchPosts() {
         try {
             const response = await fetch(`${API_BASE_URL}/posts`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const posts = await response.json();
-
-            // Clear existing posts
+            
+            // Get the container where posts should be added
+            const forumPostsContainer = document.getElementById("forumPosts");
+            if (!forumPostsContainer) throw new Error("forumPostsContainer not found in the DOM");
+    
+            // Clear previous posts
             forumPostsContainer.innerHTML = "";
-
-            // Render posts
+    
+            console.log("Fetched Posts:", posts);
+    
             posts.forEach(renderPost);
+    
         } catch (error) {
             console.error("Error fetching posts:", error);
         }
     }
+    
+    
+  
+    
 
-    // Render a single post using the template
     function renderPost(post) {
         const postElement = postTemplate.content.cloneNode(true);
         const postContainer = postElement.querySelector(".post");
-
         postContainer.setAttribute("data-post-id", post._id || "");
 
         postElement.querySelector(".post-title").textContent = post.title;
         postElement.querySelector(".post-content").textContent = post.content;
         postElement.querySelector(".post-tags").textContent = post.tags ? post.tags.join(", ") : "";
+        postElement.querySelector(".post-upvotes").textContent = post.upvotes || 0;
+        postElement.querySelector(".post-downvotes").textContent = post.downvotes || 0;
 
         const mediaContainer = postElement.querySelector(".post-media");
         if (post.image_url) {
@@ -57,28 +61,99 @@ document.addEventListener("DOMContentLoaded", () => {
             mediaContainer.appendChild(video);
         }
 
+        postElement.querySelector(".upvote-btn").addEventListener("click", () => handleVote(post._id, "upvote"));
+        postElement.querySelector(".downvote-btn").addEventListener("click", () => handleVote(post._id, "downvote"));
+
+        // Add event listener for submit reply button
+        const replyField = postElement.querySelector(".reply-field textarea");
+        postElement.querySelector(".submit-reply-btn").addEventListener("click", async () => {
+            const replyContent = replyField.value.trim();
+            if (replyContent === "") {
+                alert("Reply content cannot be empty.");
+                return;
+            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/posts/reply/${post._id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ content: replyContent })  // Send as JSON
+                });
+                if (response.ok) {
+                    alert("Reply added successfully!");
+                    replyField.value = ''; // Clear the reply input
+                    fetchPosts(); // Reload posts to reflect the new reply
+                } else {
+                    const errorData = await response.json();
+                    alert(`Error adding reply: ${errorData.message}`);
+                }
+            } catch (error) {
+                console.error("Error adding reply:", error);
+                alert("Failed to add reply. Please try again.");
+            }
+        });
+
+        // Toggle replies visibility
+        const repliesContainer = postElement.querySelector(".replies-container");
+        const repliesList = postElement.querySelector(".replies");
+        const toggleRepliesButton = postElement.querySelector(".toggle-replies-btn");
+
+        toggleRepliesButton.addEventListener("click", () => {
+            if (repliesContainer.style.display === "none" || repliesContainer.style.display === "") {
+                repliesContainer.style.display = "block";
+                toggleRepliesButton.textContent = "Hide Replies";
+                // Render replies if they exist
+                repliesList.innerHTML = ""; // Clear previous replies
+                if (post.replies) {
+                    post.replies.forEach(reply => {
+                        const replyElement = document.createElement("div");
+                        replyElement.className = "reply";
+                        replyElement.textContent = reply.content;
+                        repliesList.appendChild(replyElement);
+                    });
+                }
+            } else {
+                repliesContainer.style.display = "none";
+                toggleRepliesButton.textContent = "Show Replies";
+            }
+        });
+
         forumPostsContainer.appendChild(postElement);
     }
 
-    // Show the "Create New Post" popup
+    async function handleVote(postId, type) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/posts/${postId}/${type}`, {
+                method: "POST"
+            });
+            if (response.ok) {
+                fetchPosts(); // Reload posts to reflect the updated votes
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error(`Error handling ${type}:`, error);
+            alert(`Failed to ${type}. Please try again.`);
+        }
+    }
+
     openPostButton.addEventListener("click", () => {
         postPopup.style.display = "block";
     });
 
-    // Close the "Create New Post" popup
     closePostButton.addEventListener("click", () => {
         postPopup.style.display = "none";
     });
 
+    postForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
         const formData = new FormData(postForm);
         if (!formData.has('title') || !formData.has('content')) {
             alert("Please fill in all required fields.");
             return;
         }
-    postForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const formData = new FormData(postForm);
 
         try {
             const response = await fetch(`${API_BASE_URL}/add_post`, {
@@ -101,36 +176,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Filter posts by category
-    categoryFilter.addEventListener("change", async () => {
-        const selectedCategory = categoryFilter.value;
-        const allPosts = await fetch(`${API_BASE_URL}/posts`).then((res) => res.json());
-
-        const filteredPosts = selectedCategory
-            ? allPosts.filter((post) => post.tags && post.tags.includes(selectedCategory))
-            : allPosts;
-
-        forumPostsContainer.innerHTML = "";
-        filteredPosts.forEach(renderPost);
-    });
-
-    // Sort posts
-    sortOrder.addEventListener("change", async () => {
-        const selectedOrder = sortOrder.value;
-        const allPosts = await fetch(`${API_BASE_URL}/posts`).then((res) => res.json());
-
-        const sortedPosts = allPosts.sort((a, b) => {
-            if (selectedOrder === "latest") {
-                return new Date(b.created_at) - new Date(a.created_at);
-            } else if (selectedOrder === "upvotes") {
-                return (b.upvotes || 0) - (a.upvotes || 0);
-            }
-        });
-
-        forumPostsContainer.innerHTML = "";
-        sortedPosts.forEach(renderPost);
-    });
-
-    // Fetch initial posts
     fetchPosts();
 });

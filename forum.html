@@ -49,59 +49,60 @@
 
         <!-- All Posts Section -->
         <div class="forum-posts" id="forumPosts"></div>
+        <button class="create-post-button" id="openPostButton">Create New Post</button>
 
-        <!-- Button to Open Create Post Popup -->
-        <button class="create-post-button" id="openPostButton">+ Create New Post</button>
-    </div>
+        <!-- Popup Form for Creating a New Post -->
+        <div class="post-popup" id="postPopup" style="display: none;">
+            <div class="popup-content">
+                <h3>Create a New Post</h3>
+                <form id="postForm">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required>
 
-    <!-- Popup Form for Creating a New Post -->
-    <div class="post-popup" id="postPopup" style="display: none;">
-        <div class="popup-content">
-            <h3>Create a New Post</h3>
-            <form id="postForm">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
+                    <label for="content">Content:</label>
+                    <textarea id="content" name="content" rows="6" required></textarea>
 
-                <label for="content">Content:</label>
-                <textarea id="content" name="content" rows="6" required></textarea>
+                    <label for="tags">Tags (comma-separated):</label>
+                    <input type="text" id="tags" name="tags">
 
-                <label for="tags">Tags (comma-separated):</label>
-                <input type="text" id="tags" name="tags">
+                    <label for="images">Upload Images:</label>
+                    <input type="file" id="image_id" name="images" accept="image/*" multiple>
 
-                <label for="images">Upload Images:</label>
-                <input type="file" id="image_id" name="images" accept="image/*" multiple>
+                    <label for="videos">Upload Videos:</label>
+                    <input type="file" id="video_id" name="videos" accept="video/*" multiple>
 
-                <label for="videos">Upload Videos:</label>
-                <input type="file" id="video_id" name="videos" accept="video/*" multiple>
+                    <div class="popup-actions">
+                        <button type="submit">Submit</button>
+                        <button type="button" id="closePostButton">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-                <div class="popup-actions">
-                    <button type="submit">Submit</button>
-                    <button type="button" id="closePostButton">Cancel</button>
+        <!-- Templates for rendering posts -->
+        <template id="postTemplate">
+            <div class="post" data-post-id="">
+                <h2 class="post-title"></h2>
+                <p class="post-content"></p>
+                <p><strong>Tags:</strong> <span class="post-tags"></span></p>
+                <div class="post-media"></div>
+                <div class="post-actions">
+                    <button class="upvote-btn">Upvote (<span class="post-upvotes">0</span>)</button>
+                    <button class="downvote-btn">Downvote (<span class="post-downvotes">0</span>)</button>
+                    <button class="share-btn">Share</button>
+                    <button class="toggle-replies-btn">Show Replies</button>
                 </div>
-            </form>
-        </div>
-    </div>
+                <div class="reply-field">
+                    <textarea name="reply" placeholder="Write your reply..."></textarea>
+                    <button class="submit-reply-btn">Submit Reply</button>
+                </div>
+                <div class="replies-container" style="display: none;">
+                    <div class="replies"></div>
+                </div>
+            </div>
+        </template>
 
-    <!-- Templates -->
-    <template id="postTemplate">
-        <div class="post" data-post-id="">
-            <h2 class="post-title"></h2>
-            <p class="post-content"></p>
-            <p><strong>Tags:</strong> <span class="post-tags"></span></p>
-            <div class="post-media"></div>
-            <div class="post-actions">
-                <button class="upvote-btn">Upvote (<span class="upvote-count">0</span>)</button>
-                <button class="downvote-btn">Downvote (<span class="downvote-count">0</span>)</button>
-                <button class="share-btn">Share</button>
-                <button class="reply-btn">Reply</button>
-            </div>
-            <div class="reply-field" style="display: none;">
-                <textarea placeholder="Write your reply..."></textarea>
-                <button class="submit-reply-btn">Submit Reply</button>
-            </div>
-            <div class="replies"></div>
-        </div>
-    </template>
+    </div>
 
     <script src="forum.js"></script>
 </body>

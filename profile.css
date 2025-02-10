@@ -1,121 +1,352 @@
-body {
-    font-family: 'Arial', sans-serif;
+b/* Reset */
+* {
     margin: 0;
     padding: 0;
-    background-color: #eff1f3;
-    color: #333;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-.header-section {
+    box-sizing: border-box;
+  }
+  
+  /* Animated Gradient Background */
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #3a3a3a, #1c1c1c, #3a3a3a);
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
+    color: #f0f0f0;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  
+  /* Navigation Bar */
+  .navbar {
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar .logo {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #d3d3d3;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    color: #d3d3d3;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #38ef70;
+  }
+  
+  .search-bar {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-}
-
-.profile-image {
-    position: relative;
-    margin-right: 20px;
-}
-
-.profile-image img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    border: 3px solid #d77a61;
-    cursor: pointer;
-}
-
-.user-info {
-    margin-top: 120px;
-}
-
-.user-info input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #dbd3d8;
-    margin-bottom: 10px;
-}
-
-.edit-button {
-    background-color: #d77a61;
+  }
+  
+  .search-bar input[type="text"] {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+  }
+  
+  .search-bar button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #38ef70;
     color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .search-bar button:hover {
+    background-color: #32d966;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  /* Header Section */
+  .header-section {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+  }
+  
+  .profile-image {
+    margin-right: 1.5rem;
+  }
+  
+  .profile-image img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #38ef70;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .profile-image img:hover {
+    transform: scale(1.05);
+  }
+  
+  .user-info {
+    flex: 1;
+  }
+  
+  .user-info input#user-name {
+    font-size: 2rem;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    outline: none;
+    margin-bottom: 0.5rem;
+  }
+  
+  .user-info .edit-button {
+    background: #38ef70;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 1rem;
+  }
+  
+  .user-info .edit-button:hover {
+    background: #32d966;
+  }
+  
+  .user-info p {
+    font-size: 1rem;
+    color: #d3d3d3;
+  }
+  
+  /* Bio Section */
+  .bio-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+  }
+  
+  .bio-section h3 {
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+  }
+  
+  .bio-section p {
+    font-size: 1rem;
+    color: #d3d3d3;
+  }
+  
+  /* Preferences Section */
+  .preferences-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+  }
+  
+  .preferences-section h3 {
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+  }
+  
+  .preferences-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .preferences-list .preference {
+    background: rgba(211, 211, 211, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #f0f0f0;
+  }
+  
+  /* Past Activities Section */
+  .past-activities {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+  }
+  
+  .past-activities h3 {
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+  
+  .activity-cards {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .activity-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+    width: 300px;
+  }
+  
+  .activity-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .activity-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .activity-card h4 {
+    margin: 0.5rem;
+    color: #ffffff;
+  }
+  
+  .activity-card p {
+    margin: 0.5rem;
+    font-size: 0.9rem;
+    color: #d3d3d3;
+  }
+  
+  /* Bookings Section */
+  .bookings {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+  }
+  
+  .bookings h3 {
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+  
+  .booking-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .booking-card h4 {
+    color: #ffffff;
+  }
+  
+  .booking-card p {
+    font-size: 0.9rem;
+    color: #d3d3d3;
+  }
+  
+  .booking-card button {
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    padding: 5px 10px;
-    transition: background-color 0.3s;
-}
-
-.edit-button:hover {
-    background-color: #dbd3d8;
-}
-
-.bio-section,
-.preferences-section,
-.past-activities,
-.bookings,
-.forum-activity {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 20px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.preferences-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.preference {
-    background: #d77a61;
+    background: #38ef70;
     color: #fff;
-    padding: 5px 10px;
-    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .booking-card button:hover {
+    background: #32d966;
+  }
+  
+  /* Forum Activity Section */
+  .forum-activity {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(5px);
+  }
+  
+  .forum-activity h3 {
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+  
+  .forum-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  
+  .forum-card h4 {
+    color: #ffffff;
+  }
+  
+  .forum-card p {
+    font-size: 0.9rem;
+    color: #d3d3d3;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .header-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .profile-image {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+  
+    .activity-cards {
+      flex-direction: column;
+      align-items: center;
 }
-
-.activity-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
-}
-
-.activity-card {
-    background: white;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 150px;
-}
-
-.activity-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.booking-card {
-    background: white;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 10px 0;
-}
-
-.forum-card {
-    background: white;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 10px 0;
 }

@@ -2,96 +2,101 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="profile.css">
-    <title>Travel Platform - Profile</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Platform - Profile</title>
+  <link rel="stylesheet" href="profile.css" />
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="logo">TravelPlatform</div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="forum.html">Forum</a>
-            <a href="profile.html">Profile</a>
-            <a href="booking.html">Booking</a>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
-        </div>
-    </nav>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">TravelPlatform</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="forum.html">Forum</a>
+      <a href="profile.html">Profile</a>
+      <a href="booking.html">Booking</a>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+      <button>Search</button>
+    </div>
+  </nav>
 
-    <div class="container">
-        <div class="header-section">
-            <div class="profile-image">
-                <img id="profile-img" src="resources/1-intro-photo-final.jpg" alt="User Image"
-                    onclick="document.getElementById('profile-upload').click();">
-                <input type="file" id="profile-upload" accept="image/*" style="display:none;"
-                    onchange="updateProfileImage(this)">
-            </div>
-            <div class="user-info">
-                <input type="text" id="user-name" value="John Doe" oninput="updateName(this.value)" />
-                <button class="edit-button" onclick="editProfile()">✏️ Edit Profile</button>
-                <p>Location: <span id="user-location">New York, USA</span></p>
-            </div>
-        </div>
-
-        <div class="bio-section">
-            <h3>Bio</h3>
-            <p id="bio-text">Adventure seeker and travel enthusiast.</p>
-        </div>
-
-        <div class="preferences-section">
-            <h3>Travel Preferences</h3>
-            <div class="preferences-list">
-                <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Hiking</span>
-                <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Cultural
-                    Experiences</span>
-                <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Beach</span>
-                <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Adventure</span>
-            </div>
-        </div>
-
-        <div class="past-activities">
-            <h3>Past Activities / History</h3>
-            <div class="activity-cards">
-                <div class="activity-card" onclick="location.href='activity.html?id=1'">
-                    <img src="resources/bali.jpeg" alt="Activity Thumbnail">
-                    <h4>Visited Bali</h4>
-                    <p>Beach Vacation - June 2022</p>
-                </div>
-                <div class="activity-card" onclick="location.href='activity.html?id=2'">
-                    <img src="resources/colorado.jpeg" alt="Activity Thumbnail">
-                    <h4>Hiking in Colorado</h4>
-                    <p>Mountain Adventure - September 2022</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="bookings">
-            <h3>Booked Stays</h3>
-            <div class="booking-card">
-                <h4>Cozy Hotel in Bali</h4>
-                <p>Check-in: 2023-06-01 | Check-out: 2023-06-07</p>
-                <button>View Details</button>
-                <button>Cancel Booking</button>
-            </div>
-        </div>
-
-        <div class="forum-activity">
-            <h3>Forum Participation</h3>
-            <div class="forum-card">
-                <h4>Best places to visit in summer?</h4>
-                <p>Your comment: "I loved visiting the beach!"</p>
-                <p>Upvotes: 10 | Downvotes: 2</p>
-            </div>
-        </div>
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <div class="profile-image">
+        <img id="profile-img" src="resources/1-intro-photo-final.jpg" alt="User Image"
+          onclick="document.getElementById('profile-upload').click();" />
+        <input type="file" id="profile-upload" accept="image/*" style="display:none;"
+          onchange="updateProfileImage(this)" />
+      </div>
+      <div class="user-info">
+        <input type="text" id="user-name" value="John Doe" oninput="updateName(this.value)" />
+        <button class="edit-button" onclick="editProfile()">✏ Edit Profile</button>
+        <p>Location: <span id="user-location">New York, USA</span></p>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Bio Section -->
+    <div class="bio-section">
+      <h3>Bio</h3>
+      <p id="bio-text">Adventure seeker and travel enthusiast.</p>
+    </div>
+
+    <!-- Travel Preferences Section -->
+    <div class="preferences-section">
+      <h3>Travel Preferences</h3>
+      <div class="preferences-list">
+        <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Hiking</span>
+        <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Cultural Experiences</span>
+        <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Beach</span>
+        <span class="preference" contenteditable="true" onblur="updatePreferences(this)">Adventure</span>
+      </div>
+    </div>
+
+    <!-- Past Activities / History Section -->
+    <div class="past-activities">
+      <h3>Past Activities / History</h3>
+      <div class="activity-cards">
+        <div class="activity-card" onclick="location.href='activity.html?id=1'">
+          <img src="resources/bali.jpeg" alt="Activity Thumbnail" />
+          <h4>Visited Bali</h4>
+          <p>Beach Vacation - June 2022</p>
+        </div>
+        <div class="activity-card" onclick="location.href='activity.html?id=2'">
+          <img src="resources/colorado.jpeg" alt="Activity Thumbnail" />
+          <h4>Hiking in Colorado</h4>
+          <p>Mountain Adventure - September 2022</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bookings Section -->
+    <div class="bookings">
+      <h3>Booked Stays</h3>
+      <div class="booking-card">
+        <h4>Cozy Hotel in Bali</h4>
+        <p>Check-in: 2023-06-01 | Check-out: 2023-06-07</p>
+        <button>View Details</button>
+        <button>Cancel Booking</button>
+      </div>
+    </div>
+
+    <!-- Forum Participation Section -->
+    <div class="forum-activity">
+      <h3>Forum Participation</h3>
+      <div class="forum-card">
+        <h4>Best places to visit in summer?</h4>
+        <p>Your comment: "I loved visiting the beach!"</p>
+        <p>Upvotes: 10 | Downvotes: 2</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 
 </html>
