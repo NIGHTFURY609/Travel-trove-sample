@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from gridfs import GridFS
 from bson.objectid import ObjectId
 from io import BytesIO
+import logging
 # Flask app setup
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
@@ -19,7 +20,16 @@ db = client['travel_platform']  # Database name
 collection = db['posts']
 fs = GridFS(db)  # GridFS for storing files
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)  # Adjust the level as needed
 
+# Example: adding a simple console handler (in production, configure as needed)
+if not logger.handlers:
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
 
 
 @app.route('/')
@@ -35,11 +45,9 @@ def get_all_posts():
             # Convert ObjectId to string for JSON
             post["_id"] = str(post["_id"])
             if post.get("image_id"):
-                post["image_url"] = f"http://localhost:5000/file/{
-                    post['image_id']}"
+                post["image_url"] = f"http://localhost:5000/file/{post['image_id']}"
             if post.get("video_id"):
-                post["video_url"] = f"http://localhost:5000/file/{
-                    post['video_id']}"
+                post["video_url"] = f"http://localhost:5000/file/{post['video_id']}"
         return jsonify(posts), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
@@ -99,8 +107,7 @@ def get_file(file_id):
         file = fs.get(ObjectId(file_id))
         response = app.response_class(
             file.read(), content_type=file.content_type)
-        response.headers["Content-Disposition"] = f"inline; filename={
-            file.filename}"
+        response.headers["Content-Disposition"] = f"inline; filename={file.filename}"
         return response
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 404
@@ -132,19 +139,34 @@ def downvote_post(post_id):
 @app.route('/posts/reply/<post_id>', methods=['POST'])
 def reply_post(post_id):
     try:
-        # Use request.get_json() to parse JSON body
         data = request.get_json()
-        content = data.get('content', '').strip()  # Get content and strip whitespace
+        if not data:
+            logger.error("No JSON payload provided in the request.")
+            return jsonify({"status": "error", "message": "No JSON payload provided."}), 400
 
+        content = data.get('content', '').strip()
         if not content:
+            logger.error("Empty reply content provided for post_id %s", post_id)
             return jsonify({"status": "error", "message": "Reply content cannot be empty"}), 400
         
         reply = {"content": content}
-        collection.update_one({"_id": ObjectId(post_id)}, {"$push": {"replies": reply}})
-        return jsonify({"message": "Reply added successfully!"}), 201
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+        result = collection.update_one(
+            {"_id": ObjectId(post_id)},
+            {"$push": {"replies": reply}}
+        )
+        logger.info("Update result for post %s: matched_count=%s, modified_count=%s", 
+                    post_id, result.matched_count, result.modified_count)
+        
+        if result.matched_count == 0:
+            logger.error("No document found for post_id: %s", post_id)
+            return jsonify({"status": "error", "message": "Reply not added. Post not found."}), 404
 
+        logger.info("Reply added successfully to post_id: %s", post_id)
+        return jsonify({"message": "Reply added successfully!"}), 201
+
+    except Exception as e:
+        logger.exception("Exception occurred while adding reply to post_id: %s", post_id)
+        return jsonify({"status": "error", "message": "An error occurred on the server."}), 500
 
 if __name__ == '__main__':
     app.run(port=5000,debug=True)

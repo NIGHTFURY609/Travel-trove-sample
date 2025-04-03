@@ -64,36 +64,57 @@ document.addEventListener("DOMContentLoaded", () => {
         postElement.querySelector(".upvote-btn").addEventListener("click", () => handleVote(post._id, "upvote"));
         postElement.querySelector(".downvote-btn").addEventListener("click", () => handleVote(post._id, "downvote"));
 
-        // Add event listener for submit reply button
+            // Add event listener for submit reply button
         const replyField = postElement.querySelector(".reply-field textarea");
         postElement.querySelector(".submit-reply-btn").addEventListener("click", async () => {
-            const replyContent = replyField.value.trim();
-            if (replyContent === "") {
-                alert("Reply content cannot be empty.");
-                return;
-            }
-            try {
-                const response = await fetch(`${API_BASE_URL}/posts/reply/${post._id}`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ content: replyContent })  // Send as JSON
-                });
-                if (response.ok) {
-                    alert("Reply added successfully!");
-                    replyField.value = ''; // Clear the reply input
-                    fetchPosts(); // Reload posts to reflect the new reply
-                } else {
-                    const errorData = await response.json();
-                    alert(`Error adding reply: ${errorData.message}`);
-                }
-            } catch (error) {
-                console.error("Error adding reply:", error);
-                alert("Failed to add reply. Please try again.");
-            }
-        });
+        const replyContent = replyField.value.trim();
+        if (replyContent === "") {
+            alert("Reply content cannot be empty.");
+            return;
+        }
+        
+        // Retrieve the username from local storage.
+        const username = localStorage.getItem("username") || "Anonymous";
 
+        try {
+            const response = await fetch(`${API_BASE_URL}/posts/reply/${post._id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ content: replyContent })
+            });
+            
+            if (response.ok) {
+            // Create a new reply element.
+            const newReply = document.createElement("div");
+            newReply.classList.add("reply");
+
+            // Note: The reply date has been removed.
+            // If your reply body HTML structure already exists in your markup,
+            // you can modify this innerHTML as needed.
+            newReply.innerHTML = `
+                <div class="reply-header">
+                <span class="reply-author">${username}</span>
+                </div>
+            `;
+
+            // Append the new reply element to the replies container.
+            const repliesContainer = postElement.querySelector(".replies-container");
+            repliesContainer.appendChild(newReply);
+            alert("Reply added successfully!");
+            replyField.value = ''; // Clear the reply input
+            fetchPosts(); // Reload posts to reflect the new reply
+            } else {
+            const errorData = await response.json();
+            console.error("Server responded with an error:", errorData);
+            alert(`Error adding reply: ${errorData.message || "Unknown error"}`);
+            }
+        } catch (error) {
+            console.error("Error adding reply:", error);
+            alert("Failed to add reply. Please try again.");
+        }
+        });
         // Toggle replies visibility
         const repliesContainer = postElement.querySelector(".replies-container");
         const repliesList = postElement.querySelector(".replies");

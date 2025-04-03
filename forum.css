@@ -19,7 +19,7 @@
     background: linear-gradient(120deg, #3a3a3a, #1c1c1c, #3a3a3a);
     background-size: 200% 200%;
     animation: gradientAnimation 15s ease infinite;
-    color: #f0f0f0;
+    color: #45c83b;
     line-height: 1.6;
     min-height: 100vh;
   }
@@ -180,13 +180,16 @@
   }
   
   .post-media img {
-    max-width: 100%;
+    max-width: 300px;
+    max-height: 300px;
     border-radius: 4px;
     margin-bottom: 10px;
+    
   }
   
   .post-media video {
-    max-width: 100%;
+    max-width: 300px;
+    max-height: 300px;
     border-radius: 4px;
     margin-bottom: 10px;
   }

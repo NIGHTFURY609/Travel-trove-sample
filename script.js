@@ -2,19 +2,17 @@ async function fetchPosts() {
     try {
         const response = await fetch('http://127.0.0.1:5001/posts');
         const data = await response.json();
-        
+
         console.log("Fetched data:", data); // Log the data to inspect it
 
         if (!data.trendingPosts || !data.recommendedPosts) {
             console.error("Error: Missing data fields", data);  // Log if fields are missing
             return;
         }
-        
-        
-        
+
         displayPosts(data.trendingPosts, 'trendingPosts');
         displayPosts(data.recommendedPosts, 'recommendedPosts');
-        
+
     } catch (error) {
         console.error("Error fetching posts:", error);
     }
@@ -23,6 +21,7 @@ async function fetchPosts() {
 function displayPosts(posts, containerId) {
     const container = document.getElementById(containerId);
     container.innerHTML = ''; // Clear existing content before adding new posts
+
     posts.forEach(post => {
         const postDiv = document.createElement('div');
         postDiv.className = 'post-card';

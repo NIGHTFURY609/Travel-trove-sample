@@ -1,152 +1,166 @@
 /* Global Reset */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Animated Gradient Background */
-  @keyframes gradientAnimation {
-    0% {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Animated Gradient Background */
+@keyframes gradientAnimation {
+  0% {
       background-position: 0% 50%;
-    }
-    50% {
+  }
+  50% {
       background-position: 100% 50%;
-    }
-    100% {
+  }
+  100% {
       background-position: 0% 50%;
-    }
   }
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(120deg, #3a3a3a, #1c1c1c, #3a3a3a);
+  background-size: 200% 200%;
+  animation: gradientAnimation 15s ease infinite;
+  color: #f0f0f0;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 1.5em;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.logo {
+  font-size: 1.8em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #38ef70;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.search-bar input {
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+}
+
+.search-bar button {
+  padding: 0.5em 1em;
+  background-color: #38ef70;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #32d966;
+}
+
+/* Container */
+.container {
+  padding: 100px 20px 20px;
+  text-align: center;
+}
+
+/* Headings */
+h1 {
+  margin-bottom: 30px;
+  color: #f0f0f0;
+}
+
+/* Filter Section */
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-section label {
+  margin-right: 10px;
+}
+
+.filter-section select {
+  padding: 10px;
+  margin-right: 20px;
+  border-radius: 5px;
+  border: 1px solid #38ef70;
+}
+
+/* Post Container */
+.post-container {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scroll */
+  padding: 10px 0;
+}
+
+.post-container::-webkit-scrollbar {
+  height: 8px; /* Scrollbar height */
+}
+
+.post-container::-webkit-scrollbar-thumb {
+  background: #38ef70; /* Scrollbar color */
+  border-radius: 10px;
+}
+
+.post-container::-webkit-scrollbar-track {
+  background: #1c1c1c; /* Track color */
+}
+
+/* Post Card Style */
+.post-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  min-width: 300px; /* Minimum width for cards */
   
-  body {
-    font-family: 'Arial', sans-serif;
-    /* Template animated gradient background */
-    background: linear-gradient(120deg, #3a3a3a, #1c1c1c, #3a3a3a);
-    background-size: 200% 200%;
-    animation: gradientAnimation 15s ease infinite;
-    color: #f0f0f0;
-  }
-  
-  /* Navigation Bar */
-  .navbar {
-    background-color: rgba(0, 0, 0, 0.85);  /* Dark transparent background */
-    color: #fff;
-    padding: 1.5em;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.2em;
-  }
-  
-  .logo {
-    font-size: 1.8em;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .nav-links a:hover {
-    color: #38ef70;  /* Hover color from our template */
-  }
-  
-  .search-bar {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .search-bar input {
-    padding: 0.5em;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .search-bar button {
-    padding: 0.5em 1em;
-    background-color: #38ef70;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .search-bar button:hover {
-    background-color: #32d966;
-  }
-  
-  /* Container */
-  .container {
-    padding: 100px 20px 20px;
-    text-align: center;
-    margin: 0 auto;
-  }
-  
-  /* Headings */
-  h1 {
-    margin-bottom: 30px;
-    color: #f0f0f0;
-  }
-  
-  /* Filter Section */
-  .filter-section {
-    margin-bottom: 20px;
-  }
-  
-  .filter-section label {
-    margin-right: 10px;
-  }
-  
-  .filter-section select {
-    padding: 10px;
-    margin-right: 20px;
-    border-radius: 5px;
-    border: 1px solid #38ef70;
-  }
-  
-  /* Card Container */
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  /* Card Style */
-  .card {
-    background: rgba(255, 255, 255, 0.1);  /* Slight translucent background */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    flex: 1 1 300px;
-    transition: transform 0.3s;
-    cursor: pointer;
-    text-align: left;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .card h3 {
-    color: #38ef70;
-  }
-  
-  .card p {
-    color: #0c0b0b;
-  }
+  margin-right: 20px; /* Space between cards */
+  flex-shrink: 0; /* Prevent shrinking */
+  transition: transform 0.3s;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+.post-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  max-width: 300px; /* Maximum width for cards */
+  max-height: 300px; /* Maximum height for cards */
+}
+
+.post-card h2 {
+  color: #38ef70;
+  margin: 10px 0;
+}
+
+.post-card p {
+  color: #0c0b0b;
+}
