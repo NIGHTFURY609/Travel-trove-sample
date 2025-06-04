@@ -2,15 +2,10 @@
 
 echo "Starting Python scripts..."
 
-# Activate virtual environment (modify path if needed)
-source venv/bin/activate #for linux
-
-
 
 # Run Python scripts in the background
-python call.py &
-python app.py &
-python server.py &
-
+gunicorn -w 4 -b 0.0.0.0:5000 app:app &
+gunicorn -w 4 -b 0.0.0.0:5001 call:app &
+gunicorn -w 4 -b 0.0.0.0:5002 server:app &
 echo "All scripts started!"
 wait  # Ensures the script keeps running
