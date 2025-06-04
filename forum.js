@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const postForm = document.getElementById("postForm");
     const postTemplate = document.getElementById("postTemplate");
     
-    const API_BASE_URL = "https://vercel.com/nightfury609s-projects/travel-trove-sample"; // Update with your backend URL
+    const API_BASE_URL = "https://travel-trove-sample.vercel.app/"; // Update with your backend URL
 
     async function fetchPosts() {
         try {

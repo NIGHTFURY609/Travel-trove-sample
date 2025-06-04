@@ -1,6 +1,6 @@
 async function fetchPosts() {
     try {
-        const response = await fetch('https://vercel.com/nightfury609s-projects/travel-trove-sample/posts');
+        const response = await fetch('https://travel-trove-sample.vercel.app/posts');
         const data = await response.json();
 
         console.log("Fetched data:", data); // Log the data to inspect it
